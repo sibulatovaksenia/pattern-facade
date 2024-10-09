@@ -20,7 +20,7 @@ namespace TaxiService
         }
 
         
-        public void MakeOrder(string serviceType, string startAddress, string endAddress, DateTime? time = null)
+        public void MakeOrder(string serviceType, string startAddress, string endAddress)
         {
             string result = "Ініцілізація таксі замовлення:\n";
 
@@ -35,7 +35,7 @@ namespace TaxiService
                     break;
 
                 case "uber":
-                    result += _uber.PlaceOrder(startAddress, endAddress, time);
+                    result += _uber.PlaceOrder(startAddress, endAddress, DateTime.Now);
                     break;
 
                 default:
@@ -57,10 +57,14 @@ namespace TaxiService
 
     public class BoltService
     {
-        public string PlaceOrder(string startAddress, string endAddress)
-        {
-            return $"Bolt: Початок поїздки {startAddress}\nBolt: Кінець поїздки {endAddress}\n";
-        }
+         public string PlaceOrderStart(string startAddress)
+         {
+             return $"Bolt: Початок поїздки {startAddress}\n";
+         }
+         public string PlaceOrderEnd(string endAddress)
+         {
+             return $"Bolt: Кінець поїздки { endAddress }";
+         }
     }
 
     public class UberService
@@ -84,7 +88,7 @@ namespace TaxiService
 
             facade.MakeOrder("bolt", "вул. Університетська 14", "пл. Народна 3");
 
-            facade.MakeOrder("uber", "вул. Університетська 14", "пл. Народна 3", new DateTime(2022, 9, 21, 9, 30, 0));
+            facade.MakeOrder("uber", "вул. Університетська 14", "пл. Народна 3");
         }
     }
 
